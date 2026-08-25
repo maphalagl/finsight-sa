@@ -1,67 +1,83 @@
 import type { ReactNode } from "react";
-import authImage from "../../assets/finsight-auth.png";
+import { Link } from "react-router-dom";
+import FinSightLogo from "../common/FinSightLogo";
 
 interface AuthLayoutProps {
   children: ReactNode;
   title: string;
   subtitle: string;
+  badge?: string;
 }
 
 export default function AuthLayout({
   children,
   title,
   subtitle,
+  badge = "FinSight SA Portal",
 }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen bg-[#fcf8fa] text-black">
-      {/* Top navigation */}
-      <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-5">
-        <span className="text-xl font-bold">FinSight SA</span>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100/70 text-slate-900 font-sans flex flex-col justify-between selection:bg-teal-100 selection:text-teal-900">
+      {/* Top Bar */}
+      <header className="w-full px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
+        <Link to="/" className="flex items-center transition hover:opacity-90">
+          <FinSightLogo size="md" />
+        </Link>
 
-        <button
-          type="button"
-          className="text-sm text-gray-700 transition hover:text-black"
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-teal-700 transition backdrop-blur-xs"
         >
-          Support
-        </button>
+          <span>←</span>
+          <span>Back to Home</span>
+        </Link>
       </header>
 
-      <main className="flex min-h-screen">
-        {/* Left illustration */}
-        <section className="hidden w-1/2 items-center justify-center bg-[#f0edef] lg:flex">
-          <div className="w-full max-w-xl px-10 text-center">
-            <img
-              src={authImage}
-              alt="FinSight SA security illustration"
-              className="mx-auto max-h-162.5 w-full object-contain"
-            />
+      {/* Centered Auth Card Layout */}
+      <main className="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+        <div className="w-full max-w-md">
+          {/* Main Form Card */}
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-7 sm:p-9 shadow-xl shadow-slate-200/50">
+            {/* Header */}
+            <div className="text-center mb-6">
+              <span className="inline-block rounded-full bg-teal-50 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-teal-800 border border-teal-200/60 mb-2.5">
+                {badge}
+              </span>
 
-            <h2 className="mt-6 text-3xl font-bold">Institutional Security</h2>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+                {title}
+              </h1>
 
-            <p className="mx-auto mt-3 max-w-lg text-gray-600">
-              Secure access to your South African investment intelligence
-              platform.
-            </p>
-          </div>
-        </section>
-
-        {/* Right content */}
-        <section className="flex w-full items-center justify-center px-6 py-24 lg:w-1/2">
-          <div className="w-full max-w-md">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-
-              <p className="mt-2 text-gray-600">{subtitle}</p>
+              <p className="mt-1.5 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                {subtitle}
+              </p>
             </div>
 
+            {/* Form Children */}
             {children}
+          </div>
 
-            <p className="mt-10 text-center text-xs text-gray-500">
-              FinSight SA — Portfolio Project
+          {/* Security & Trust Footer */}
+          <div className="mt-6 flex flex-col items-center gap-2 text-center text-xs text-slate-500">
+            <div className="flex items-center gap-2 text-[11px] text-slate-600 font-medium">
+              <span className="flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                256-Bit SSL Encryption
+              </span>
+              <span>•</span>
+              <span>POPIA Compliant</span>
+              <span>•</span>
+              <span>JSE Market Data</span>
+            </div>
+
+            <p className="text-[11px] text-slate-400">
+              FinSight SA — South African AI Financial Market Intelligence
             </p>
           </div>
-        </section>
+        </div>
       </main>
+
+      {/* Bottom Spacer */}
+      <footer className="py-3" />
     </div>
   );
 }
